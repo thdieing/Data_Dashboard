@@ -777,7 +777,7 @@ with st.sidebar:
             st.error(
                 f"`{DATA_FILE}` nicht gefunden.\n\n"
                 "Bitte Datei in denselben Ordner wie dieses Skript legen "
-                "oder **„Datei hochladen"** wählen."
+                "oder Datei hochladen wählen."
             )
 
     else:  # Upload
