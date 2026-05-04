@@ -501,7 +501,7 @@ COLUMN_DESCRIPTIONS = {
     },
 }
 
-# ══════════════════════════════════════════════════════════════════════════════
+══════════════════════════════════════════════════════════════════════════════
 # ── SEITEN-KONFIGURATION ──────────────────────────────────────────────────────
 # ══════════════════════════════════════════════════════════════════════════════
 
@@ -622,13 +622,13 @@ st.markdown(
 # ══════════════════════════════════════════════════════════════════════════════
 
 PLOTLY_THEME = dict(
-    template="plotly_dark",
-    paper_bgcolor="#0f1117",
-    plot_bgcolor="#0f1117",
+    template="plotly_white",
+    paper_bgcolor="#ffffff",
+    plot_bgcolor="#f5f5f5",
     font_family="IBM Plex Sans",
-    font_color="#e0e0e0",
+    font_color="#333333",
 )
-COLOR_SEQ = px.colors.qualitative.Bold
+COLOR_SEQ = ["#c0392b", "#e74c3c", "#888888", "#aaaaaa", "#cccccc", "#555555", "#ff6b6b", "#b03a2e"]
 
 
 def load_rds(path: str) -> pd.DataFrame:
@@ -777,7 +777,7 @@ with st.sidebar:
             st.error(
                 f"`{DATA_FILE}` nicht gefunden.\n\n"
                 "Bitte Datei in denselben Ordner wie dieses Skript legen "
-                "oder **Datei hochladen** wählen."
+                "oder **„Datei hochladen"** wählen."
             )
 
     else:  # Upload
