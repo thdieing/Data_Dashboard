@@ -520,22 +520,25 @@ st.markdown(
     html, body, [class*="css"] { font-family: 'IBM Plex Sans', sans-serif; }
     h1, h2, h3 { font-family: 'IBM Plex Mono', monospace; }
 
+    /* ── Sidebar ── */
     [data-testid="stSidebar"] {
-        background: #0f1117;
-        border-right: 1px solid #2a2d3e;
+        background: #2b2b2b !important;
+        border-right: 3px solid #c0392b;
     }
-    [data-testid="stSidebar"] * { color: #e0e0e0 !important; }
+    [data-testid="stSidebar"] * { color: #f0f0f0 !important; }
 
+    /* ── Metrics ── */
     [data-testid="stMetric"] {
-        background: #1a1d2e;
-        border: 1px solid #2a2d3e;
-        border-radius: 8px;
+        background: #f5f5f5;
+        border: 1px solid #dddddd;
+        border-left: 4px solid #c0392b;
+        border-radius: 6px;
         padding: 12px 18px;
     }
-    [data-testid="stMetricLabel"] { font-size: 0.75rem; color: #8b8fa8 !important; }
+    [data-testid="stMetricLabel"] { font-size: 0.75rem; color: #666666 !important; }
     [data-testid="stMetricValue"] {
         font-family: 'IBM Plex Mono', monospace;
-        color: #7dd3fc !important;
+        color: #c0392b !important;
     }
 
     .section-header {
@@ -543,49 +546,54 @@ st.markdown(
         font-size: 0.7rem;
         letter-spacing: 0.12em;
         text-transform: uppercase;
-        color: #7dd3fc;
-        border-bottom: 1px solid #2a2d3e;
+        color: #c0392b;
+        border-bottom: 2px solid #c0392b;
         padding-bottom: 6px;
         margin-bottom: 16px;
     }
 
-    [data-testid="stDataFrame"] { border: 1px solid #2a2d3e; border-radius: 6px; }
+    [data-testid="stDataFrame"] { border: 1px solid #dddddd; border-radius: 6px; }
 
-    .stTabs [data-baseweb="tab-list"] { gap: 8px; }
+    /* ── Tabs ── */
+    .stTabs [data-baseweb="tab-list"] { gap: 6px; border-bottom: 2px solid #dddddd; }
     .stTabs [data-baseweb="tab"] {
-        background: #1a1d2e;
+        background: #f0f0f0;
         border-radius: 6px 6px 0 0;
         padding: 6px 20px;
         font-family: 'IBM Plex Mono', monospace;
         font-size: 0.8rem;
+        color: #555555;
     }
-    .stTabs [aria-selected="true"] { background: #2a3a5e !important; color: #7dd3fc !important; }
+    .stTabs [aria-selected="true"] { background: #c0392b !important; color: #ffffff !important; }
 
-    /* Glossar-Karten */
+    /* ── Glossar-Karten ── */
     .glossar-card {
-        background: #1a1d2e;
-        border: 1px solid #2a2d3e;
-        border-radius: 10px;
+        background: #fafafa;
+        border: 1px solid #e0e0e0;
+        border-left: 4px solid #c0392b;
+        border-radius: 6px;
         padding: 18px 22px;
         margin-bottom: 14px;
     }
     .glossar-card h4 {
         font-family: 'IBM Plex Mono', monospace;
-        color: #7dd3fc;
+        color: #c0392b;
         margin: 0 0 4px 0;
         font-size: 1rem;
     }
-    .glossar-card .var-name {
+    .glossar-card h5 {
         font-family: 'IBM Plex Mono', monospace;
         font-size: 0.72rem;
-        color: #555e7a;
+        color: #999999;
         margin-bottom: 10px;
+        font-weight: 400;
     }
-    .glossar-card p { margin: 4px 0; font-size: 0.88rem; color: #c0c4d6; }
+    .glossar-card p { margin: 4px 0; font-size: 0.88rem; color: #333333; }
     .glossar-badge {
         display: inline-block;
-        background: #2a3a5e;
-        color: #7dd3fc;
+        background: #f0f0f0;
+        color: #c0392b;
+        border: 1px solid #c0392b;
         border-radius: 4px;
         padding: 2px 10px;
         font-size: 0.72rem;
@@ -593,25 +601,23 @@ st.markdown(
         margin-bottom: 10px;
     }
 
-    /* NaN-Hinweis */
+    /* ── NaN-Hinweis ── */
     .nan-info {
         font-size: 0.82rem;
-        color: #8b8fa8;
+        color: #888888;
         font-style: italic;
         margin: 4px 0 12px 0;
     }
 
-    /* Datenquelle Bereich */
+    /* ── Datenquelle ── */
     .datasource-box {
-        background: #1a1d2e;
-        border: 1px solid #2a2d3e;
+        background: #f5f5f5;
+        border: 1px solid #dddddd;
         border-radius: 8px;
         padding: 12px 16px;
         margin-bottom: 12px;
     }
-    .datasource-active {
-        border-color: #7dd3fc;
-    }
+    .datasource-active { border-color: #c0392b; }
     </style>
     """,
     unsafe_allow_html=True,
@@ -629,6 +635,7 @@ PLOTLY_THEME = dict(
     font_color="#333333",
 )
 COLOR_SEQ = ["#c0392b", "#e74c3c", "#888888", "#aaaaaa", "#cccccc", "#555555", "#ff6b6b", "#b03a2e"]
+
 
 
 def load_rds(path: str) -> pd.DataFrame:
