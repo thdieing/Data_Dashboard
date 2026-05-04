@@ -871,7 +871,7 @@ if seite == "Univariate Analyse":
 
         msg = nan_sentence(n_nan, n_total, lbl)
         if msg:
-            st.markdown(f'<p class="nan-info">ℹ️ {msg}</p>', unsafe_allow_html=True)
+            st.markdown(f'<p class="nan-info"> {msg}</p>', unsafe_allow_html=True)
 
         st.dataframe(ft, use_container_width=True, hide_index=True)
 
@@ -940,7 +940,7 @@ elif seite == "Bivariate Analyse":
 
     msg_biv = nan_sentence_biv(n_nan, n_total, lbl1, lbl2)
     if msg_biv:
-        st.markdown(f'<p class="nan-info">ℹ️ {msg_biv}</p>', unsafe_allow_html=True)
+        st.markdown(f'<p class="nan-info"> {msg_biv}</p>', unsafe_allow_html=True)
 
     diagrammtyp = st.radio(
         "Diagrammtyp",
