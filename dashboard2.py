@@ -286,7 +286,7 @@ COLUMN_DESCRIPTIONS = {
         "MK12_a1": {
         "label": "Arbeitsplatz Empfehlung",
         "Frage Item": "Würden Sie die Universität als guten Arbeitsplatz weiterempfehlen?",
-        "werte": "stimme voll zu; stimme eher zu; teils/teils; stimme eher nicht zu; stimme eher nicht zu; keine Angabe",
+        "werte": "stimme voll zu; stimme eher zu; teils/teils; stimme eher nicht zu; stimme überhaupt nicht zu; keine Angabe",
         "filter":"",
     },
         "MK13_a1": {
