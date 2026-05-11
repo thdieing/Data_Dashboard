@@ -38,7 +38,7 @@ INCLUDED_VARIABLES = [
     "MK20_a12","MK20_a13", "MK17_a1","MK17_a2", "MK17_a3", "MK17_a4", "MK17_a5", "MK17_a6", "MK17_a7", "MK17_a8","MK17_a9", 
     "MK04_a1","MK12_a1","MK13_a1","A121_a1","A121_a2", "A121_a3", "A121_a4", "A121_a5", "A121_a7", "A121P_a1",
     "A121P_a2", "A121P_a3", "A121P_a4", "A121P_a5", "A121P_a6", "A121P_a7", "HBA121_a1","A122_a1","HBA122_a1","A123_a1","A123_a2"
-    "A91_a1", "K1", "K2", "K3", "K4_a1", "K5_a1", "K6Uni_a1","K8P_a1", "K8P_a2", "K8W_a1", "K8W_a2","K8ATM_a1","K8ATM_a2", 
+    "A91_a1", "K1", "K2", "K3", "K4_a1", "K5_a1", "K6Uni_a1","K8P_a1", "K8P_a2", "K8W_a1", "K8W_a2", 
     "AOBer","MK15_a1","MK16_a1"
 
 ]
@@ -468,18 +468,6 @@ COLUMN_DESCRIPTIONS = {
         "Frage Item": "Meine persönliche Schwerpunktsetzung liegt …",
         "werte": "... in der Lehre.; … in der Forschung.; … in anderen Aufgabenfeldern (z. B. QM).; keine Angabe",
         "filter":"Z1: Wissenschaftliche Mitarbeiter:innen",
-    },
-        "K8ATM_a1": {
-        "label": "Schwerpunkte / Aufgabenschwerpunkte 1",
-        "Frage Item": "Mein Aufgabenschwerpunkt liegt …",
-        "werte": "… im Administrativen.; … im Technischen.; ... im Wissenschaftsmanagement.; … in anderen Aufgabenfeldern.; keine Angabe",
-        "filter":"Z1: Mitarbeiter:in in Administration und Technik (ATM) in einem Fachbereich; Mitarbeiter:in in Administration und Technik (ATM) in einer zentralen Einheit (ZV, ZE, etc.)",
-    },
-        "K8ATM_a2": {
-        "label": "Schwerpunkte / Aufgabenschwerpunkte 2",
-        "Frage Item": "Meine persönliche Schwerpunktsetzung liegt …",
-        "werte": "… im Administrativen.; … im Technischen.; ... im Wissenschaftsmanagement.; … in anderen Aufgabenfeldern.; keine Angabe",
-        "filter":"Z1: Mitarbeiter:in in Administration und Technik (ATM) in einem Fachbereich; Mitarbeiter:in in Administration und Technik (ATM) in einer zentralen Einheit (ZV, ZE, etc.)",
     },
         "AOBer": {
         "label": "Organisationsbereich",
