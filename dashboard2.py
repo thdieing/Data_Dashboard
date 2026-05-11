@@ -628,8 +628,13 @@ def get_defined_order(varname: str) -> list[str] | None:
     """
     Parse the semicolon-separated 'werte' string for a variable and return
     the list of category labels in that order.
-    Returns None if no description exists for this variable.
+    Returns None if no description exists for this variable, or if the
+    variable is explicitly excluded from defined ordering (e.g. Z1).
     """
+    ORDERING_EXCLUDED = {"Z1"}
+    if varname in ORDERING_EXCLUDED:
+        return None
+
     info = COLUMN_DESCRIPTIONS.get(varname)
     if info is None:
         return None
