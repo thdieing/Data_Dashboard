@@ -38,7 +38,7 @@ INCLUDED_VARIABLES = [
     "MK20_a12","MK20_a13", "MK17_a1","MK17_a2", "MK17_a3", "MK17_a4", "MK17_a5", "MK17_a6", "MK17_a7", "MK17_a8","MK17_a9", 
     "MK04_a1","MK12_a1","MK13_a1","A121_a1","A121_a2", "A121_a3", "A121_a4", "A121_a5", "A121_a7", "A121P_a1",
     "A121P_a2", "A121P_a3", "A121P_a4", "A121P_a5", "A121P_a6", "A121P_a7", "HBA121_a1","A122_a1","HBA122_a1","A123_a1","A123_a2"
-    "A91_a1", "K1", "K2", "K3", "K4_a1", "K5_a1", "K6Uni_a1","K8P_a1", "K8P_a2", "K8W_a1", "K8W_a2", 
+    "A91_a1", "K1", "K2", "K3", "K4_a1", "K5_a1","K8P_a1", "K8P_a2", "K8W_a1", "K8W_a2", 
     "AOBer","MK15_a1","MK16_a1"
 
 ]
@@ -438,12 +438,6 @@ COLUMN_DESCRIPTIONS = {
         "Frage Item": "Mein vertraglicher Beschäftigungsumfang beträgt …",
         "werte": "bis 50%; über 50% bis 75%; über 75% bis 99%; Vollzeit; keine Angabe",
         "filter":"",
-    },
-        "K6Uni_a1": {
-        "label": "Lehrverpflichtung",
-        "Frage Item": "Ich habe eine Lehrverpflichtung im Umfang von … Semesterwochenstunden.",
-        "werte": "0; 1-6; 7-9; 10 oder mehr; keine Angabe",
-        "filter":"Z1: Professor:innen; Wissenschaftliche Mitarbeiter:innen",
     },
         "K8P_a1": {
         "label": "Lehrverpflichtun Professor:innen 1",
