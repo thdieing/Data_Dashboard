@@ -624,6 +624,44 @@ PLOTLY_THEME = dict(
 )
 COLOR_SEQ = ["#c0392b", "#e74c3c", "#888888", "#aaaaaa", "#cccccc", "#555555", "#ff6b6b", "#b03a2e"]
 
+def get_defined_order(varname: str) -> list[str] | None:
+    """
+    Parse the semicolon-separated 'werte' string for a variable and return
+    the list of category labels in that order.
+    Returns None if no description exists for this variable.
+    """
+    info = COLUMN_DESCRIPTIONS.get(varname)
+    if info is None:
+        return None
+    werte_str = info.get("werte", "")
+    if not werte_str:
+        return None
+    # Split on semicolons, strip whitespace from each entry
+    return [w.strip() for w in werte_str.split(";") if w.strip()]
+ 
+ 
+def apply_defined_order(series: pd.Series, varname: str) -> pd.Series:
+    """
+    Convert a string series to an ordered Categorical whose level order
+    follows the 'werte' definition in COLUMN_DESCRIPTIONS.
+ 
+    - Categories present in the data but absent from the definition are
+      appended at the end (so nothing is silently dropped).
+    - If no definition exists the series is returned as-is (plain strings).
+    """
+    defined = get_defined_order(varname)
+    if defined is None:
+        return series.astype(str)
+ 
+    # Find any data values not covered by the definition and append them
+    actual_vals = set(series.dropna().astype(str).unique())
+    extra = [v for v in sorted(actual_vals) if v not in defined]
+    ordered_cats = defined + extra
+ 
+    cat_series = pd.Categorical(series.astype(str), categories=ordered_cats, ordered=True)
+    return pd.Series(cat_series, index=series.index, name=series.name)
+ 
+ 
 
 
 def load_rds(path: str) -> pd.DataFrame:
@@ -687,14 +725,31 @@ def nan_sentence_biv(n_nan: int, n_total: int, lbl1: str, lbl2: str) -> str:
     )
 
 
-def maybe_bin(series: pd.Series, max_cats: int = 20) -> pd.Series:
+def maybe_bin(series: pd.Series, varname: str | None = None, max_cats: int = 20) -> pd.Series:
+    """
+    For numeric variables with many unique values: bin into quantiles.
+    For everything else: apply the defined category order from COLUMN_DESCRIPTIONS
+    (if available), otherwise return plain strings.
+    """
     if pd.api.types.is_numeric_dtype(series):
         n_unique = series.nunique()
         if n_unique > max_cats:
             binned = pd.qcut(series, q=min(8, n_unique), duplicates="drop")
-            return binned.astype(str)
-        return series.astype(str)
-    return series.astype(str)
+            result = binned.astype(str)
+            result.name = series.name
+            return result
+        # Numeric but few levels — still apply defined order if present
+        str_series = series.astype(str)
+        str_series.name = series.name
+    else:
+        str_series = series.astype(str)
+        str_series.name = series.name
+ 
+    if varname is not None:
+        return apply_defined_order(str_series, varname)
+    return str_series
+ 
+
 
 
 def freq_table(series: pd.Series) -> pd.DataFrame:
