@@ -753,72 +753,82 @@ def maybe_bin(series: pd.Series, varname: str | None = None, max_cats: int = 20)
 
 
 def freq_table(series: pd.Series) -> pd.DataFrame:
-    counts = series.value_counts(dropna=True)
+    """
+    Build a frequency table that respects the category order of an ordered
+    Categorical series.  Plain string series fall back to value_counts order.
+    """
+    if hasattr(series, "cat") and series.cat.ordered:
+        # Preserve defined order; include only categories that actually appear
+        present_cats = [c for c in series.cat.categories if c in series.values]
+        counts = series.value_counts().reindex(present_cats, fill_value=0)
+    else:
+        counts = series.value_counts(dropna=True)
+ 
     pct = (counts / counts.sum() * 100).round(2)
     out = pd.DataFrame({"Anzahl": counts, "Anteil (%)": pct})
     out.index.name = series.name
     return out.reset_index()
-
-
+ 
+ 
 def crosstab_tables(s1: pd.Series, s2: pd.Series) -> tuple[pd.DataFrame, pd.DataFrame]:
     ct_counts = pd.crosstab(s1, s2, margins=False, dropna=True)
-    ct_pct = (pd.crosstab(s1, s2, normalize="index", dropna=True) * 100).round(2)
+    ct_pct    = (pd.crosstab(s1, s2, normalize="index", dropna=True) * 100).round(2)
     return ct_counts, ct_pct
-
-
+ 
+ 
 def var_label(varname: str) -> str:
     return COLUMN_DESCRIPTIONS.get(varname, {}).get("label", varname)
-
-
+ 
+ 
 # ══════════════════════════════════════════════════════════════════════════════
 # ── SIDEBAR & DATENQUELLE ─────────────────────────────────────────────────────
 # ══════════════════════════════════════════════════════════════════════════════
-
+ 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 LOCAL_FILE_PATH = os.path.join(SCRIPT_DIR, DATA_FILE)
-
-
+ 
+ 
 @st.cache_data(show_spinner="Lokale Datei wird geladen …")
 def cached_load_local(path: str) -> pd.DataFrame:
     return load_rds(path)
-
-
+ 
+ 
 @st.cache_data(show_spinner="Hochgeladene Datei wird geladen …")
 def cached_load_upload(file_bytes: bytes) -> pd.DataFrame:
     return load_rds_from_bytes(file_bytes)
-
-
+ 
+ 
 with st.sidebar:
     st.markdown("## ZVV -- Dashboard")
-
+ 
     # Logo
     for ext in ("logo.png", "logo.jpg", "logo.svg", "tu_logo.png", "tu_logo.jpg"):
         _lp = os.path.join(SCRIPT_DIR, ext)
         if os.path.exists(_lp):
             st.image(_lp, width=160)
             break
-
+ 
     st.markdown(
         '''<div style="font-family:'Roboto Condensed',Tahoma,sans-serif;font-size:1.3rem;
         font-weight:700;color:#005AA9;border-bottom:2px solid #005AA9;
         padding-bottom:8px;margin-bottom:8px;margin-top:8px">Datenexplorer</div>''',
         unsafe_allow_html=True,
     )
-
+ 
     # ── Datenquelle auswählen ─────────────────────────────────────────────────
     st.markdown("**Datenquelle**")
-
+ 
     local_available = os.path.exists(LOCAL_FILE_PATH)
-
+ 
     data_source = st.radio(
         "Datenquelle auswählen",
         options=["Lokale Datei", "Datei hochladen"],
         label_visibility="collapsed",
         key="data_source",
     )
-
+ 
     df_full = None
-
+ 
     if data_source == "Lokale Datei":
         if local_available:
             st.success(f"✓ `{DATA_FILE}` gefunden")
@@ -829,7 +839,7 @@ with st.sidebar:
                 "Bitte Datei in denselben Ordner wie dieses Skript legen "
                 "oder Datei hochladen wählen."
             )
-
+ 
     else:  # Upload
         uploaded_file = st.file_uploader(
             "RDS-Datei hochladen",
@@ -843,31 +853,31 @@ with st.sidebar:
             df_full = cached_load_upload(file_bytes)
         else:
             st.info("Bitte eine .rds-Datei auswählen.")
-
+ 
     if df_full is None:
         st.stop()
-
+ 
     st.markdown("---")
-
+ 
     seite = st.radio(
         "Navigation",
         ["Univariate Analyse", "Bivariate Analyse", "Variablen-Glossar"],
         label_visibility="collapsed",
     )
-
+ 
     st.markdown("---")
-
-
+ 
+ 
 # ══════════════════════════════════════════════════════════════════════════════
 # ── DATEN FILTERN ─────────────────────────────────────────────────────────────
 # ══════════════════════════════════════════════════════════════════════════════
-
+ 
 available_vars = [v for v in INCLUDED_VARIABLES if v in df_full.columns]
 df = df_full[available_vars].copy()
-
+ 
 # ── Übersichts-Kennzahlen ─────────────────────────────────────────────────────
 st.title("Zuhören. Verstehen. Verändern. TU im Dialog (Welle1) -- Dashboard")
-
+ 
 m1, m2, m3, m4 = st.columns(4)
 m1.metric("Beobachtungen", f"{df.shape[0]:,}")
 m2.metric("Variablen", f"{df.shape[1]:,}")
@@ -879,18 +889,18 @@ m4.metric(
     "Kategoriale Var.",
     sum(not pd.api.types.is_numeric_dtype(df[c]) for c in df.columns),
 )
-
+ 
 st.markdown("---")
-
+ 
 # ══════════════════════════════════════════════════════════════════════════════
 # ── SEITE 1: UNIVARIATE ANALYSE ───────────────────────────────────────────────
 # ══════════════════════════════════════════════════════════════════════════════
-
+ 
 if seite == "Univariate Analyse":
     st.markdown('<p class="section-header">Univariate Analyse</p>', unsafe_allow_html=True)
-
+ 
     uni_col, uni_chart_col = st.columns([1, 2])
-
+ 
     with uni_col:
         uni_var = st.selectbox(
             "Variable auswählen",
@@ -899,25 +909,33 @@ if seite == "Univariate Analyse":
             key="uni_var",
         )
         show_chart = st.checkbox("Balkendiagramm anzeigen", value=True, key="uni_chart")
-
-    n_total    = len(df[uni_var])
-    n_nan      = count_nan(df[uni_var])
-    valid_ser  = df[uni_var].dropna()
-    uni_series = maybe_bin(valid_ser)
+ 
+    n_total   = len(df[uni_var])
+    n_nan     = count_nan(df[uni_var])
+    valid_ser = df[uni_var].dropna()
+ 
+    # ── KEY CHANGE: pass varname so category order is applied ─────────────────
+    uni_series = maybe_bin(valid_ser, varname=uni_var)
     uni_series.name = uni_var
-
+ 
     ft  = freq_table(uni_series)
     lbl = var_label(uni_var)
-
+ 
+    # Preserve the order for the bar chart x-axis
+    if hasattr(uni_series, "cat") and uni_series.cat.ordered:
+        cat_order = [c for c in uni_series.cat.categories if c in uni_series.values]
+    else:
+        cat_order = ft[uni_var].tolist()
+ 
     with uni_col:
         st.markdown(f"**Verteilung: {lbl}**")
-
+ 
         msg = nan_sentence(n_nan, n_total, lbl)
         if msg:
             st.markdown(f'<p class="nan-info"> {msg}</p>', unsafe_allow_html=True)
-
+ 
         st.dataframe(ft, use_container_width=True, hide_index=True)
-
+ 
     with uni_chart_col:
         if show_chart:
             fig_uni = px.bar(
@@ -930,18 +948,20 @@ if seite == "Univariate Analyse":
                 title=f"Verteilung: {lbl}",
                 labels={"Anteil (%)": "Anteil (%)", uni_var: lbl},
                 range_y=[0, 100],
+                # ── KEY CHANGE: enforce defined category order on x-axis ──────
+                category_orders={uni_var: cat_order},
             )
             fig_uni.update_traces(texttemplate="%{text:.1f}%", textposition="outside")
             fig_uni.update_layout(showlegend=False, xaxis_tickangle=-35, yaxis_ticksuffix="%", **PLOTLY_THEME)
             st.plotly_chart(fig_uni, use_container_width=True)
-
+ 
 # ══════════════════════════════════════════════════════════════════════════════
 # ── SEITE 2: BIVARIATE ANALYSE ────────────────────────────────────════════════
 # ══════════════════════════════════════════════════════════════════════════════
-
+ 
 elif seite == "Bivariate Analyse":
     st.markdown('<p class="section-header">Bivariate Analyse</p>', unsafe_allow_html=True)
-
+ 
     bl, br = st.columns(2)
     with bl:
         biv_var1 = st.selectbox(
@@ -958,40 +978,54 @@ elif seite == "Bivariate Analyse":
             format_func=var_label,
             key="biv_var2",
         )
-
+ 
     lbl1 = var_label(biv_var1)
     lbl2 = var_label(biv_var2)
-
+ 
     pair_df = df[[biv_var1, biv_var2]].copy()
     n_total = len(pair_df)
     n_nan   = int(pair_df.isna().any(axis=1).sum())
-
-    full_s1 = maybe_bin(df[biv_var1].dropna()); full_s1.name = biv_var1
-    full_s2 = maybe_bin(df[biv_var2].dropna()); full_s2.name = biv_var2
-    all_cats1 = sorted(full_s1.unique())
-    all_cats2 = sorted(full_s2.unique())
-
+ 
+    # ── KEY CHANGE: apply defined order to both variables ─────────────────────
+    full_s1 = maybe_bin(df[biv_var1].dropna(), varname=biv_var1)
+    full_s1.name = biv_var1
+    full_s2 = maybe_bin(df[biv_var2].dropna(), varname=biv_var2)
+    full_s2.name = biv_var2
+ 
+    # Collect ordered category lists for reindex and chart
+    if hasattr(full_s1, "cat") and full_s1.cat.ordered:
+        all_cats1 = list(full_s1.cat.categories)
+    else:
+        all_cats1 = sorted(full_s1.unique())
+ 
+    if hasattr(full_s2, "cat") and full_s2.cat.ordered:
+        all_cats2 = list(full_s2.cat.categories)
+    else:
+        all_cats2 = sorted(full_s2.unique())
+ 
     pair_df = pair_df.dropna()
-
-    s1 = maybe_bin(pair_df[biv_var1]); s1.name = biv_var1
-    s2 = maybe_bin(pair_df[biv_var2]); s2.name = biv_var2
-
+ 
+    s1 = maybe_bin(pair_df[biv_var1], varname=biv_var1)
+    s1.name = biv_var1
+    s2 = maybe_bin(pair_df[biv_var2], varname=biv_var2)
+    s2.name = biv_var2
+ 
     ct_counts, ct_pct = crosstab_tables(s1, s2)
-
+ 
     ct_counts = ct_counts.reindex(index=all_cats1, columns=all_cats2, fill_value=0)
     ct_pct    = ct_pct.reindex(index=all_cats1, columns=all_cats2, fill_value=0.0)
-
+ 
     msg_biv = nan_sentence_biv(n_nan, n_total, lbl1, lbl2)
     if msg_biv:
         st.markdown(f'<p class="nan-info"> {msg_biv}</p>', unsafe_allow_html=True)
-
+ 
     diagrammtyp = st.radio(
         "Diagrammtyp",
         ["Gruppierte Balken", "Heatmap"],
         horizontal=True,
         key="biv_chart_type",
     )
-
+ 
     tab_anz, tab_pct_tab = st.tabs(["Häufigkeiten", "Zeilenprozente (%)"])
     with tab_anz:
         st.markdown(f"**{lbl1} × {lbl2} — Häufigkeiten**")
@@ -999,11 +1033,11 @@ elif seite == "Bivariate Analyse":
     with tab_pct_tab:
         st.markdown(f"**{lbl1} × {lbl2} — Zeilenprozente**")
         st.dataframe(ct_pct, use_container_width=True)
-
+ 
     ct_melted = ct_pct.reset_index().melt(
         id_vars=biv_var1, var_name=biv_var2, value_name="Anteil (%)"
     )
-
+ 
     if diagrammtyp == "Heatmap":
         fig_biv = px.imshow(
             ct_pct, text_auto=True, aspect="auto",
@@ -1016,26 +1050,28 @@ elif seite == "Bivariate Analyse":
             barmode="group", color_discrete_sequence=COLOR_SEQ,
             title=f"Verteilung von {lbl1} nach {lbl2}",
             labels={"Anteil (%)": "Anteil (%)", biv_var1: lbl1, biv_var2: lbl2},
+            # ── KEY CHANGE: enforce defined order on both axes ────────────────
+            category_orders={biv_var1: all_cats1, biv_var2: all_cats2},
         )
         fig_biv.update_layout(xaxis_tickangle=-35, legend_title=lbl2, yaxis_ticksuffix="%", **PLOTLY_THEME)
         fig_biv.update_yaxes(range=[0, 100], autorange=False)
     st.plotly_chart(fig_biv, use_container_width=True)
-
+ 
 # ══════════════════════════════════════════════════════════════════════════════
 # ── SEITE 3: VARIABLEN-GLOSSAR ────────────────────────────────────────────────
 # ══════════════════════════════════════════════════════════════════════════════
-
+ 
 elif seite == "Variablen-Glossar":
     st.markdown('<p class="section-header">Variablen-Glossar</p>', unsafe_allow_html=True)
     st.markdown("Erläuterungen zu allen eingeschlossenen Variablen des Datensatzes.")
     st.markdown("")
-
+ 
     suche = st.text_input(
         "Variable suchen …",
         placeholder="z. B. Alter, Bildung, Region …",
     )
     st.markdown("---")
-
+ 
     gefunden = 0
     for var in available_vars:
         info   = COLUMN_DESCRIPTIONS.get(var, {})
@@ -1043,10 +1079,10 @@ elif seite == "Variablen-Glossar":
         beschr = info.get("Frage Item", "Keine Beschreibung vorhanden.")
         werte  = info.get("werte",        "–")
         filter = info.get("filter",        "–")
-
+ 
         if suche and suche.lower() not in label.lower() and suche.lower() not in var.lower():
             continue
-
+ 
         gefunden += 1
         st.markdown(
             f"""
@@ -1062,10 +1098,11 @@ elif seite == "Variablen-Glossar":
             """,
             unsafe_allow_html=True,
         )
-
+ 
     if gefunden == 0:
         st.info("Keine passende Variable gefunden.")
-
+ 
 # ── Footer ────────────────────────────────────────────────────────────────────
 st.markdown("---")
 st.caption("Zuhören. Verstehen. Verändern. TU im Dialog (Welle1) -- Dashboard")
+ 
