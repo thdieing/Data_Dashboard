@@ -67,7 +67,7 @@ COLUMN_DESCRIPTIONS = {
        "A11EN_a1": {
         "label": "Arbeitszufriedenheit insgesamt",
         "Frage Item": "Wenn Sie an alles denken, was für Ihre Arbeit an der TU Darmstadt eine Rolle spielt, wie zufrieden sind Sie dann insgesamt mit Ihrer Arbeitssituation?",
-        "werte": "sehr zufrieden; eher zufrieden; teils / teils; eher nicht zufrieden; gar nicht zufrieden; keine Angabe",
+        "werte": "sehr zufrieden; eher zufrieden; teils/teils; eher nicht zufrieden; gar nicht zufrieden; keine Angabe",
         "filter":"",
     },
         "A12EN_a1": {
