@@ -819,41 +819,19 @@ with st.sidebar:
  
     local_available = os.path.exists(LOCAL_FILE_PATH)
  
-    data_source = st.radio(
-        "Datenquelle auswählen",
-        options=["Lokale Datei", "Datei hochladen"],
-        label_visibility="collapsed",
-        key="data_source",
-    )
- 
     df_full = None
  
-    if data_source == "Lokale Datei":
-        if local_available:
-            st.success(f"✓ `{DATA_FILE}` gefunden")
+    if local_available:
+            #st.success(f"✓ `{DATA_FILE}` gefunden")
             df_full = cached_load_local(LOCAL_FILE_PATH)
-        else:
-            st.error(
-                f"`{DATA_FILE}` nicht gefunden.\n\n"
-                "Bitte Datei in denselben Ordner wie dieses Skript legen "
-                "oder Datei hochladen wählen."
-            )
- 
-    else:  # Upload
-        uploaded_file = st.file_uploader(
-            "RDS-Datei hochladen",
-            type=["rds"],
-            help="Wählen Sie eine .rds-Datei von Ihrem Computer.",
-            key="rds_upload",
-        )
-        if uploaded_file is not None:
-            st.success(f"✓ `{uploaded_file.name}` hochgeladen")
-            file_bytes = uploaded_file.read()
-            df_full = cached_load_upload(file_bytes)
-        else:
-            st.info("Bitte eine .rds-Datei auswählen.")
- 
+    else:
+        st.error(
+            f"`{DATA_FILE}` nicht gefunden.\n\n"
+            "Bitte Datei in denselben Ordner wie dieses Skript legen "
+            ) 
+        
     if df_full is None:
+        
         st.stop()
  
     st.markdown("---")
