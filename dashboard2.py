@@ -810,12 +810,12 @@ with st.sidebar:
     st.markdown(
         '''<div style="font-family:'Roboto Condensed',Tahoma,sans-serif;font-size:1.3rem;
         font-weight:700;color:#005AA9;border-bottom:2px solid #005AA9;
-        padding-bottom:8px;margin-bottom:8px;margin-top:8px">Datenexplorer</div>''',
+        padding-bottom:8px;margin-bottom:8px</div>''',
         unsafe_allow_html=True,
     )
  
     # ── Datenquelle auswählen ─────────────────────────────────────────────────
-    st.markdown("**Datenquelle**")
+    #st.markdown("**Datenquelle**")
  
     local_available = os.path.exists(LOCAL_FILE_PATH)
  
