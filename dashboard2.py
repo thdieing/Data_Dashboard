@@ -975,19 +975,19 @@ def nan_sentence(n_nan: int, n_total: int, label: str) -> str:
         return ""
     pct = round(n_nan / n_total * 100, 1)
     return (
-        f"{n_nan} von {n_total} Teilnehmer*innen ({pct} %) "
-        f"haben für **{label}** keinen gültigen Wert (fehlend) und wurden "
+        f"{n_nan} von {n_total} Beobachtungen ({pct} %) "
+        f"haben für <strong>{label}</strong> keinen gültigen Wert (fehlend) und wurden "
         f"aus Tabelle und Diagramm ausgeschlossen."
     )
-
-
+ 
+ 
 def nan_sentence_biv(n_nan: int, n_total: int, lbl1: str, lbl2: str) -> str:
     if n_nan == 0:
         return ""
     pct = round(n_nan / n_total * 100, 1)
     return (
-        f"{n_nan} von {n_total} Teilnehmer*innen ({pct} %) wurden ausgeschlossen, "
-        f"da mindestens einer der Werte für **{lbl1}** oder **{lbl2}** fehlt."
+        f"{n_nan} von {n_total} Beobachtungen ({pct} %) wurden ausgeschlossen, "
+        f"da mindestens einer der Werte für <strong>{lbl1}</strong> oder <strong>{lbl2}</strong> fehlt."
     )
 
 
