@@ -483,6 +483,157 @@ COLUMN_DESCRIPTIONS = {
     },
 }
 
+# ══════════════════════════════════════════════════════════════════════════════
+# ── FAQ-INHALTE ────────────────────────────────────────────────────────────────
+# ══════════════════════════════════════════════════════════════════════════════
+
+FAQ_ITEMS = [
+    {
+        "frage": "Was ist dieses Dashboard und wofür wird es genutzt?",
+        "antwort": (
+            "Dieses Dashboard dient der Auswertung der Mitarbeiter:innenbefragung "
+            "„Zuhören. Verstehen. Verändern. TU im Dialog“. Es lädt die Rohdaten "
+            "(eine .rds-Datei) und stellt daraus interaktive Häufigkeitsauswertungen, "
+            "Kreuztabellen und Diagramme bereit, ohne dass eigene Programmierkenntnisse "
+            "nötig sind."
+        ),
+    },
+    {
+        "frage": "Wie wähle ich meine Datenquelle aus?",
+        "antwort": (
+            "In der Seitenleiste können Sie zwischen „Lokale Datei“ (die Datei "
+            "survey_raw.rds liegt bereits im selben Ordner wie dieses Skript) und "
+            "„Datei hochladen“ (Sie wählen eine .rds-Datei manuell von Ihrem Rechner) "
+            "wählen. Solange keine gültige Datei vorliegt, bleiben alle Auswertungen "
+            "leer und das Dashboard fordert Sie zur Auswahl auf."
+        ),
+    },
+    {
+        "frage": "Was bedeutet „univariate Analyse“?",
+        "antwort": (
+            "Bei der univariaten Analyse wird immer nur eine einzige Variable "
+            "betrachtet, zum Beispiel „Arbeitszufriedenheit insgesamt“. Das Dashboard "
+            "zeigt Ihnen, wie häufig jede Antwortkategorie dieser Variable vorkommt – "
+            "als Tabelle mit Anzahl und Anteil in Prozent sowie als Balkendiagramm. "
+            "So erkennen Sie schnell die Verteilung einer einzelnen Fragestellung."
+        ),
+    },
+    {
+        "frage": "Was bedeutet „bivariate Analyse“?",
+        "antwort": (
+            "Die bivariate Analyse betrachtet den Zusammenhang zwischen zwei "
+            "Variablen gleichzeitig, zum Beispiel „Arbeitszufriedenheit“ nach "
+            "„Beschäftigungsgruppe“. Sie wählen eine Hauptvariable (Zeilen) und eine "
+            "Gruppierungsvariable (Spalten). Das Dashboard erstellt daraus eine "
+            "Kreuztabelle (Häufigkeiten und Zeilenprozente) sowie wahlweise ein "
+            "gruppiertes Balkendiagramm oder eine Heatmap, damit Unterschiede "
+            "zwischen den Gruppen sichtbar werden."
+        ),
+    },
+    {
+        "frage": "Was bedeutet der Hinweistext zu fehlenden Werten (NaN)?",
+        "antwort": (
+            "Nicht jede teilnehmende Person hat jede Frage beantwortet. Fehlende "
+            "Antworten werden im Datensatz als „NaN“ (Not a Number, also fehlender "
+            "Wert) gespeichert. Unter jeder Tabelle sehen Sie – falls vorhanden – "
+            "einen Hinweis, wie viele Beobachtungen wegen fehlender Werte aus der "
+            "jeweiligen Auswertung ausgeschlossen wurden. Diese Fälle fließen nicht "
+            "in Tabelle oder Diagramm ein, damit die Prozentangaben nicht verzerrt werden."
+        ),
+    },
+    {
+        "frage": "Wie lese ich die Häufigkeitstabelle bei der univariaten Analyse?",
+        "antwort": (
+            "Die Tabelle zeigt pro Antwortkategorie zwei Spalten: „Anzahl“ (wie "
+            "viele Personen diese Antwort gegeben haben) und „Anteil (%)“ (der "
+            "prozentuale Anteil an allen gültigen Antworten dieser Variable). Die "
+            "Reihenfolge der Kategorien richtet sich, wo möglich, nach der im "
+            "Fragebogen definierten Antwortskala (z. B. von „trifft sehr zu“ bis "
+            "„trifft gar nicht zu“)."
+        ),
+    },
+    {
+        "frage": "Wie lese ich die Kreuztabelle bei der bivariaten Analyse?",
+        "antwort": (
+            "Im Reiter „Häufigkeiten“ sehen Sie, wie oft jede Kombination aus "
+            "Hauptvariable und Gruppierungsvariable vorkommt. Im Reiter "
+            "„Zeilenprozente (%)“ werden diese Häufigkeiten pro Zeile auf 100 % "
+            "normiert – so lässt sich vergleichen, wie sich die Antwortverteilung "
+            "innerhalb jeder Gruppe unterscheidet, unabhängig von der jeweiligen "
+            "Gruppengröße."
+        ),
+    },
+    {
+        "frage": "Was ist der Unterschied zwischen „Gruppierte Balken“ und „Heatmap“?",
+        "antwort": (
+            "„Gruppierte Balken“ zeigt für jede Ausprägung der Hauptvariable "
+            "mehrere nebeneinanderstehende Balken – einen pro Gruppe. Die "
+            "„Heatmap“ stellt dieselben Zeilenprozente stattdessen farblich "
+            "codiert dar: je dunkler die Farbe, desto höher der Anteil. Beide "
+            "Darstellungen zeigen dieselben Daten, nur in unterschiedlicher "
+            "Visualisierung – wählen Sie, was für Sie leichter lesbar ist."
+        ),
+    },
+    {
+        "frage": "Warum sehe ich manchmal Gruppen von Zahlen statt einzelner Werte (z. B. bei Zahlen mit vielen Ausprägungen)?",
+        "antwort": (
+            "Wenn eine numerische Variable sehr viele unterschiedliche Werte "
+            "besitzt, würde eine Tabelle mit jedem Einzelwert unübersichtlich. "
+            "Das Dashboard fasst solche Variablen automatisch in Gruppen "
+            "(Quantile) zusammen, damit die Verteilung trotzdem verständlich "
+            "bleibt."
+        ),
+    },
+    {
+        "frage": "Was zeigt mir der Text, der nach der Variablenauswahl erscheint?",
+        "antwort": (
+            "Sobald Sie in der univariaten oder bivariaten Analyse eine Variable "
+            "auswählen, zeigt das Dashboard direkt darunter den genauen Wortlaut "
+            "der zugehörigen Frage aus dem Fragebogen („Frage Item“) an. So wissen "
+            "Sie immer exakt, was ursprünglich gefragt wurde, ohne extra ins "
+            "Glossar wechseln zu müssen."
+        ),
+    },
+    {
+        "frage": "Was ist das Variablen-Glossar?",
+        "antwort": (
+            "Das Glossar listet alle im Dashboard verfügbaren Variablen mit ihrem "
+            "internen Variablennamen, dem genauen Fragetext, den möglichen "
+            "Antwortausprägungen sowie eventuellen Filterhinweisen (z. B. wenn eine "
+            "Frage nur bestimmten Beschäftigtengruppen gestellt wurde) auf. Über "
+            "das Suchfeld können Sie gezielt nach Variablen suchen."
+        ),
+    },
+    {
+        "frage": "Was bedeutet der Hinweis „Mögliche Filter“ im Glossar?",
+        "antwort": (
+            "Manche Fragen wurden im Fragebogen nur bestimmten Personengruppen "
+            "gestellt, zum Beispiel nur Professor:innen oder nur Personen in der "
+            "Promotion. Der Hinweis „Mögliche Filter“ zeigt an, für welche Gruppe "
+            "die jeweilige Variable relevant ist. Alle anderen Personen haben bei "
+            "dieser Frage in der Regel „keine Angabe“ ausgewählt, was sich auf den "
+            "Anteil fehlender bzw. neutraler Werte auswirken kann."
+        ),
+    },
+    {
+        "frage": "Kann ich die Tabellen oder Diagramme exportieren?",
+        "antwort": (
+            "Tabellen lassen sich direkt über das Symbol oben rechts in der "
+            "jeweiligen Tabelle als CSV herunterladen. Diagramme bieten über das "
+            "Kamera-Symbol in der Plotly-Werkzeugleiste (beim Überfahren mit der "
+            "Maus sichtbar) die Möglichkeit, sie als Bild zu speichern."
+        ),
+    },
+    {
+        "frage": "Was mache ich, wenn die lokale Datei nicht gefunden wird?",
+        "antwort": (
+            "Prüfen Sie, ob die Datei survey_raw.rds im selben Ordner wie das "
+            "Skript dashboard.py liegt. Alternativ können Sie in der Seitenleiste "
+            "auf „Datei hochladen“ wechseln und die Datei manuell auswählen."
+        ),
+    },
+]
+
 #══════════════════════════════════════════════════════════════════════════════
 # ── SEITEN-KONFIGURATION ──────────────────────────────────────────────────────
 # ══════════════════════════════════════════════════════════════════════════════
@@ -499,8 +650,8 @@ st.markdown(
     <style>
     @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@300;400;600&display=swap');
 
-    html, body, [class*="css"] { font-family: 'IBM Plex Sans', sans-serif; }
-    h1, h2, h3 { font-family: 'IBM Plex Mono', monospace; }
+    html, body, [class*="css"] { font-family: 'IBM Plex Sans', sans-serif; color: #000000; }
+    h1, h2, h3 { font-family: 'IBM Plex Mono', monospace; color: #000000; }
 
     /* ── Sidebar ── */
     [data-testid="stSidebar"] {
@@ -517,7 +668,7 @@ st.markdown(
         border-radius: 6px;
         padding: 12px 18px;
     }
-    [data-testid="stMetricLabel"] { font-size: 0.75rem; color: #666666 !important; }
+    [data-testid="stMetricLabel"] { font-size: 0.75rem; color: #000000 !important; }
     [data-testid="stMetricValue"] {
         font-family: 'IBM Plex Mono', monospace;
         color: #c0392b !important;
@@ -544,7 +695,7 @@ st.markdown(
         padding: 6px 20px;
         font-family: 'IBM Plex Mono', monospace;
         font-size: 0.8rem;
-        color: #555555;
+        color: #000000;
     }
     .stTabs [aria-selected="true"] { background: #c0392b !important; color: #ffffff !important; }
 
@@ -566,11 +717,11 @@ st.markdown(
     .glossar-card h5 {
         font-family: 'IBM Plex Mono', monospace;
         font-size: 0.72rem;
-        color: #999999;
+        color: #000000;
         margin-bottom: 10px;
         font-weight: 400;
     }
-    .glossar-card p { margin: 4px 0; font-size: 0.88rem; color: #333333; }
+    .glossar-card p { margin: 4px 0; font-size: 0.88rem; color: #000000; }
     .glossar-badge {
         display: inline-block;
         background: #f0f0f0;
@@ -583,10 +734,40 @@ st.markdown(
         margin-bottom: 10px;
     }
 
+    /* ── FAQ-Karten ── */
+    .faq-card {
+        background: #fafafa;
+        border: 1px solid #e0e0e0;
+        border-left: 4px solid #c0392b;
+        border-radius: 6px;
+        padding: 18px 22px;
+        margin-bottom: 14px;
+    }
+    .faq-card h4 {
+        font-family: 'IBM Plex Mono', monospace;
+        color: #c0392b;
+        margin: 0 0 8px 0;
+        font-size: 1rem;
+    }
+    .faq-card p { margin: 4px 0; font-size: 0.9rem; color: #000000; line-height: 1.5; }
+
+    /* ── Frage-Item-Hinweis (nach Variablenauswahl) ── */
+    .frage-item-box {
+        background: #fafafa;
+        border: 1px solid #e0e0e0;
+        border-left: 4px solid #c0392b;
+        border-radius: 6px;
+        padding: 10px 16px;
+        margin: 10px 0 16px 0;
+        font-size: 0.86rem;
+        color: #000000;
+    }
+    .frage-item-box strong { color: #c0392b; }
+
     /* ── NaN-Hinweis ── */
     .nan-info {
         font-size: 0.82rem;
-        color: #888888;
+        color: #000000;
         font-style: italic;
         margin: 4px 0 12px 0;
     }
@@ -614,7 +795,7 @@ PLOTLY_THEME = dict(
     paper_bgcolor="#ffffff",
     plot_bgcolor="#f5f5f5",
     font_family="IBM Plex Sans",
-    font_color="#333333",
+    font_color="#000000",
 )
 COLOR_SEQ = ["#c0392b", "#e74c3c", "#888888", "#aaaaaa", "#cccccc", "#555555", "#ff6b6b", "#b03a2e"]
 
@@ -777,6 +958,20 @@ def crosstab_tables(s1: pd.Series, s2: pd.Series) -> tuple[pd.DataFrame, pd.Data
  
 def var_label(varname: str) -> str:
     return COLUMN_DESCRIPTIONS.get(varname, {}).get("label", varname)
+
+
+def frage_item_text(varname: str) -> str:
+    return COLUMN_DESCRIPTIONS.get(varname, {}).get("Frage Item", "")
+
+
+def render_frage_item_box(varname: str) -> None:
+    """Zeigt die Original-Fragestellung einer Variable in einer Hinweisbox an."""
+    text = frage_item_text(varname)
+    if text:
+        st.markdown(
+            f'<div class="frage-item-box"><strong>Frage im Fragebogen:</strong> {text}</div>',
+            unsafe_allow_html=True,
+        )
  
  
 # ══════════════════════════════════════════════════════════════════════════════
@@ -853,41 +1048,52 @@ with st.sidebar:
         else:
             st.info("Bitte eine .rds-Datei auswählen.")
  
-    if df_full is None:
-        st.stop()
+    if df_full is None and st.session_state.get("__nav_page__", None) != "FAQ":
+        # FAQ-Seite soll auch ohne geladene Datei erreichbar sein
+        pass
  
     st.markdown("---")
  
     seite = st.radio(
         "Navigation",
-        ["Univariate Analyse", "Bivariate Analyse", "Variablen-Glossar"],
+        ["Univariate Analyse", "Bivariate Analyse", "Variablen-Glossar", "FAQ"],
         label_visibility="collapsed",
     )
+    st.session_state["__nav_page__"] = seite
  
     st.markdown("---")
+
+# Die FAQ-Seite braucht keine geladenen Daten - alle anderen Seiten schon.
+if df_full is None and seite != "FAQ":
+    st.stop()
  
  
 # ══════════════════════════════════════════════════════════════════════════════
 # ── DATEN FILTERN ─────────────────────────────────────────────────────────────
 # ══════════════════════════════════════════════════════════════════════════════
- 
-available_vars = [v for v in INCLUDED_VARIABLES if v in df_full.columns]
-df = df_full[available_vars].copy()
+
+if df_full is not None:
+    available_vars = [v for v in INCLUDED_VARIABLES if v in df_full.columns]
+    df = df_full[available_vars].copy()
+else:
+    available_vars = []
+    df = pd.DataFrame()
  
 # ── Übersichts-Kennzahlen ─────────────────────────────────────────────────────
 st.title("Zuhören. Verstehen. Verändern. TU im Dialog (Welle1) -- Dashboard")
- 
-m1, m2, m3, m4 = st.columns(4)
-m1.metric("Beobachtungen", f"{df.shape[0]:,}")
-m2.metric("Variablen", f"{df.shape[1]:,}")
-#m3.metric(
-   #"Numerische Var.",
-    #sum(pd.api.types.is_numeric_dtype(df[c]) for c in df.columns),
-#)
-#m4.metric(
-    #"Kategoriale Var.",
-    #sum(not pd.api.types.is_numeric_dtype(df[c]) for c in df.columns),
-#)
+
+if df_full is not None:
+    m1, m2, m3, m4 = st.columns(4)
+    m1.metric("Beobachtungen", f"{df.shape[0]:,}")
+    m2.metric("Variablen", f"{df.shape[1]:,}")
+    #m3.metric(
+       #"Numerische Var.",
+        #sum(pd.api.types.is_numeric_dtype(df[c]) for c in df.columns),
+    #)
+    #m4.metric(
+        #"Kategoriale Var.",
+        #sum(not pd.api.types.is_numeric_dtype(df[c]) for c in df.columns),
+    #)
  
 st.markdown("---")
  
@@ -908,6 +1114,9 @@ if seite == "Univariate Analyse":
             format_func=var_label,
             key="uni_var",
         )
+        # ── Frage-Item der ausgewählten Variable direkt anzeigen ───────────────
+        render_frage_item_box(uni_var)
+
         show_chart = st.checkbox("Balkendiagramm anzeigen", value=True, key="uni_chart")
  
     n_total   = len(df[uni_var])
@@ -970,6 +1179,8 @@ elif seite == "Bivariate Analyse":
             format_func=var_label,
             key="biv_var1",
         )
+        # ── Frage-Item der Hauptvariable direkt anzeigen ───────────────────────
+        render_frage_item_box(biv_var1)
     with br:
         remaining = [v for v in available_vars if v != biv_var1]
         biv_var2 = st.selectbox(
@@ -978,6 +1189,8 @@ elif seite == "Bivariate Analyse":
             format_func=var_label,
             key="biv_var2",
         )
+        # ── Frage-Item der Gruppierungsvariable direkt anzeigen ────────────────
+        render_frage_item_box(biv_var2)
  
     lbl1 = var_label(biv_var1)
     lbl2 = var_label(biv_var2)
@@ -1089,11 +1302,11 @@ elif seite == "Variablen-Glossar":
             <div class="glossar-card">
                 <h4>{label}</h4>
                 <h5>{var}</h5>
-                <p><strong style="color:#8b8fa8">Mögliche Filter:&nbsp;</strong>{filter}</p>
-                <hr style="border: none; border-top: 1px solid #8b8fa8; margin: 8px 0;">
-                <p><strong style="color:#8b8fa8">Ausprägungen:&nbsp;</strong>{werte}</p>
-                <hr style="border: none; border-top: 1px solid #8b8fa8; margin: 8px 0;">
-                <p><strong style="color:#8b8fa8">Frage Item:&nbsp;</strong><i>{beschr}</i></p>
+                <p><strong style="color:#c0392b">Mögliche Filter:&nbsp;</strong>{filter}</p>
+                <hr style="border: none; border-top: 1px solid #dddddd; margin: 8px 0;">
+                <p><strong style="color:#c0392b">Ausprägungen:&nbsp;</strong>{werte}</p>
+                <hr style="border: none; border-top: 1px solid #dddddd; margin: 8px 0;">
+                <p><strong style="color:#c0392b">Frage Item:&nbsp;</strong><i>{beschr}</i></p>
             </div>
             """,
             unsafe_allow_html=True,
@@ -1101,8 +1314,48 @@ elif seite == "Variablen-Glossar":
  
     if gefunden == 0:
         st.info("Keine passende Variable gefunden.")
- 
+
+# ══════════════════════════════════════════════════════════════════════════════
+# ── SEITE 4: FAQ ───────────────────────────────────────────────────────────────
+# ══════════════════════════════════════════════════════════════════════════════
+
+elif seite == "FAQ":
+    st.markdown('<p class="section-header">Häufig gestellte Fragen (FAQ)</p>', unsafe_allow_html=True)
+    st.markdown(
+        "Hier finden Sie Erläuterungen zu allen Funktionen und Begriffen des Dashboards. "
+        "Nutzen Sie das Suchfeld, um gezielt nach einem Stichwort zu suchen."
+    )
+    st.markdown("")
+
+    faq_suche = st.text_input(
+        "FAQ durchsuchen …",
+        placeholder="z. B. NaN, Heatmap, Glossar, Datenquelle …",
+        key="faq_search",
+    )
+    st.markdown("---")
+
+    gefunden_faq = 0
+    for item in FAQ_ITEMS:
+        frage = item["frage"]
+        antwort = item["antwort"]
+
+        if faq_suche and faq_suche.lower() not in frage.lower() and faq_suche.lower() not in antwort.lower():
+            continue
+
+        gefunden_faq += 1
+        st.markdown(
+            f"""
+            <div class="faq-card">
+                <h4>{frage}</h4>
+                <p>{antwort}</p>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+
+    if gefunden_faq == 0:
+        st.info("Keine passende Frage gefunden.")
+
 # ── Footer ────────────────────────────────────────────────────────────────────
 st.markdown("---")
 st.caption("Zuhören. Verstehen. Verändern. TU im Dialog (Welle1) -- Dashboard")
- 
