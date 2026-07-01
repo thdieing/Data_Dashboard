@@ -492,20 +492,9 @@ FAQ_ITEMS = [
         "frage": "Was ist dieses Dashboard und wofür wird es genutzt?",
         "antwort": (
             "Dieses Dashboard dient der Auswertung der Mitarbeiter:innenbefragung "
-            "„Zuhören. Verstehen. Verändern. TU im Dialog“. Es lädt die Rohdaten "
-            "(eine .rds-Datei) und stellt daraus interaktive Häufigkeitsauswertungen, "
+            "„Zuhören. Verstehen. Verändern. TU im Dialog“. Es stellt interaktive Häufigkeitsauswertungen, "
             "Kreuztabellen und Diagramme bereit, ohne dass eigene Programmierkenntnisse "
             "nötig sind."
-        ),
-    },
-    {
-        "frage": "Wie wähle ich meine Datenquelle aus?",
-        "antwort": (
-            "In der Seitenleiste können Sie zwischen „Lokale Datei“ (die Datei "
-            "survey_raw.rds liegt bereits im selben Ordner wie dieses Skript) und "
-            "„Datei hochladen“ (Sie wählen eine .rds-Datei manuell von Ihrem Rechner) "
-            "wählen. Solange keine gültige Datei vorliegt, bleiben alle Auswertungen "
-            "leer und das Dashboard fordert Sie zur Auswahl auf."
         ),
     },
     {
