@@ -625,14 +625,6 @@ FAQ_ITEMS = [
         ),
     },
     {
-        "frage": "Was mache ich, wenn die lokale Datei nicht gefunden wird?",
-        "antwort": (
-            "Prüfen Sie, ob die Datei survey_raw.rds im selben Ordner wie das "
-            "Skript dashboard.py liegt. Alternativ können Sie in der Seitenleiste "
-            "auf „Datei hochladen“ wechseln und die Datei manuell auswählen."
-        ),
-    },
-    {
         "frage": "Kann ich in den Dropdown-Menüs (Auswahlfeldern) tippen, um eine Variable zu finden?",
         "antwort": (
             "Ja. Klicken Sie auf ein Auswahlfeld (z. B. „Variable auswählen“) und "
@@ -1177,7 +1169,7 @@ else:
 st.title("Zuhören. Verstehen. Verändern. TU im Dialog (Welle1) -- Dashboard")
 
 if df_full is not None:
-    m1, m2, m3, m4 = st.columns(4)
+    m1, m2 = st.columns(2)
     m1.metric("Beobachtungen", f"{df.shape[0]:,}")
     m2.metric("Variablen", f"{df.shape[1]:,}")
     #m3.metric(
@@ -1211,7 +1203,7 @@ if seite == "Univariate Analyse":
         # ── Frage-Item der ausgewählten Variable direkt anzeigen ───────────────
         render_frage_item_box(uni_var)
 
-        show_chart = st.checkbox("Balkendiagramm anzeigen", value=True, key="uni_chart")
+        show_chart = True#st.checkbox("Balkendiagramm anzeigen", value=True, key="uni_chart")
  
     n_total   = len(df[uni_var])
     n_nan     = count_nan(df[uni_var])
@@ -1462,3 +1454,10 @@ elif seite == "FAQ":
 # ── Footer ────────────────────────────────────────────────────────────────────
 st.markdown("---")
 st.caption("Zuhören. Verstehen. Verändern. TU im Dialog (Welle1) -- Dashboard")
+
+st.caption("Kontakt: tuimdialog@tu-darmstadt.de")
+st.caption(
+    "Zur Verfügung gestellt vom Institut für Politikwissenschaft, "
+    "Arbeitsbereich Politisches System Deutschlands und Vergleich politischer Systeme, "
+    "TU Darmstadt · [Zur Institutsseite](https://www.politikwissenschaft.tu-darmstadt.de/institut/arbeitsbereiche_und_nachwuchsgruppen/de_vergleich/index.de.jsp)"
+)
