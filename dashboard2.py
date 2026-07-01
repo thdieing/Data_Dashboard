@@ -880,14 +880,14 @@ st.title("Zuhören. Verstehen. Verändern. TU im Dialog (Welle1) -- Dashboard")
 m1, m2, m3, m4 = st.columns(4)
 m1.metric("Beobachtungen", f"{df.shape[0]:,}")
 m2.metric("Variablen", f"{df.shape[1]:,}")
-m3.metric(
-    "Numerische Var.",
-    sum(pd.api.types.is_numeric_dtype(df[c]) for c in df.columns),
-)
-m4.metric(
-    "Kategoriale Var.",
-    sum(not pd.api.types.is_numeric_dtype(df[c]) for c in df.columns),
-)
+#m3.metric(
+   #"Numerische Var.",
+    #sum(pd.api.types.is_numeric_dtype(df[c]) for c in df.columns),
+#)
+#m4.metric(
+    #"Kategoriale Var.",
+    #sum(not pd.api.types.is_numeric_dtype(df[c]) for c in df.columns),
+#)
  
 st.markdown("---")
  
@@ -897,6 +897,7 @@ st.markdown("---")
  
 if seite == "Univariate Analyse":
     st.markdown('<p class="section-header">Univariate Analyse</p>', unsafe_allow_html=True)
+    st.write("Eine univariate Analyse untersucht nur eine einzige Variable. Dabei werden ihre Eigenschaften beschrieben, zum Beispiel der Durchschnitt, die Verteilung oder der häufigste Wert.")
  
     uni_col, uni_chart_col = st.columns([1, 2])
  
@@ -960,7 +961,7 @@ if seite == "Univariate Analyse":
  
 elif seite == "Bivariate Analyse":
     st.markdown('<p class="section-header">Bivariate Analyse</p>', unsafe_allow_html=True)
- 
+    st.write("Eine bivariate Analyse untersucht den Zusammenhang zwischen zwei Variablen. Sie zeigt, ob und wie sich eine Variable auf die andere auswirkt oder mit ihr zusammenhängt.")
     bl, br = st.columns(2)
     with bl:
         biv_var1 = st.selectbox(
