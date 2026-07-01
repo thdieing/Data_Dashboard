@@ -632,6 +632,100 @@ FAQ_ITEMS = [
             "auf „Datei hochladen“ wechseln und die Datei manuell auswählen."
         ),
     },
+    {
+        "frage": "Kann ich in den Dropdown-Menüs (Auswahlfeldern) tippen, um eine Variable zu finden?",
+        "antwort": (
+            "Ja. Klicken Sie auf ein Auswahlfeld (z. B. „Variable auswählen“) und "
+            "fangen Sie einfach an zu tippen – das Feld filtert die Liste live "
+            "nach passenden Treffern. So müssen Sie nicht durch die gesamte Liste "
+            "scrollen, sondern geben z. B. „Zufrieden“ ein und erhalten sofort "
+            "alle passenden Variablen zur Auswahl."
+        ),
+    },
+    {
+        "frage": "Wie funktioniert die Suche im Glossar und in den FAQ?",
+        "antwort": (
+            "Beide Suchfelder filtern live, während Sie tippen. Es genügt ein "
+            "Teilwort (z. B. „Alter“ oder „NaN“), es muss nicht der komplette "
+            "Begriff eingegeben werden. Groß- und Kleinschreibung spielt dabei "
+            "keine Rolle."
+        ),
+    },
+    {
+        "frage": "Was bewirkt der Radio-Button „Navigation“ in der Seitenleiste?",
+        "antwort": (
+            "Damit wechseln Sie zwischen den vier Hauptbereichen des Dashboards: "
+            "Univariate Analyse, Bivariate Analyse, Variablen-Glossar und FAQ. Nur "
+            "ein Bereich ist jeweils aktiv; Ihre bereits getroffenen Auswahlen "
+            "(z. B. gewählte Variable) bleiben beim Wechseln zwischen den Seiten "
+            "in der Regel erhalten, solange Sie dieselbe Auswahlbox erneut aufrufen."
+        ),
+    },
+    {
+        "frage": "Wozu dient das Kontrollkästchen (Checkbox) „Balkendiagramm anzeigen“?",
+        "antwort": (
+            "Mit dieser Checkbox können Sie das Balkendiagramm bei der univariaten "
+            "Analyse ein- oder ausblenden, falls Sie nur die Tabelle sehen möchten "
+            "oder die Seite schneller laden soll. Ein Häkchen bedeutet: Diagramm ist sichtbar."
+        ),
+    },
+    {
+        "frage": "Was machen die Reiter (Tabs) „Häufigkeiten“ und „Zeilenprozente (%)“?",
+        "antwort": (
+            "Tabs bündeln mehrere Ansichten auf engem Raum. Klicken Sie auf einen "
+            "Reiter, um zwischen der Tabelle mit absoluten Häufigkeiten und der "
+            "Tabelle mit prozentualen Zeilenanteilen umzuschalten, ohne die Seite "
+            "zu verlassen."
+        ),
+    },
+    {
+        "frage": "Was bewirken die Optionsfelder (Radio-Buttons) „Gruppierte Balken“ / „Heatmap“?",
+        "antwort": (
+            "Optionsfelder erlauben genau eine Auswahl aus mehreren Möglichkeiten. "
+            "Hier legen Sie fest, in welcher Diagrammform die bivariate Auswertung "
+            "dargestellt wird. Ein Klick auf die andere Option wechselt die "
+            "Darstellung sofort, ohne dass Daten neu geladen werden müssen."
+        ),
+    },
+    {
+        "frage": "Kann ich die Seitenleiste ein- oder ausblenden?",
+        "antwort": (
+            "Ja. Oben links in der Seitenleiste (oder oben links im Hauptbereich, "
+            "wenn die Leiste bereits eingeklappt ist) befindet sich ein Pfeil- bzw. "
+            "„»“-Symbol, mit dem Sie die Seitenleiste ein- und ausklappen können. "
+            "Das ist hilfreich, wenn Sie mehr Platz für Tabellen und Diagramme "
+            "benötigen."
+        ),
+    },
+    {
+        "frage": "Wie sortiere ich eine Tabelle oder mache sie größer?",
+        "antwort": (
+            "Klicken Sie auf eine Spaltenüberschrift, um die Tabelle danach zu "
+            "sortieren (Pfeil zeigt die Richtung). Über das kleine Symbol oben "
+            "rechts in der Tabelle können Sie sie außerdem im Vollbildmodus "
+            "öffnen oder als CSV-Datei herunterladen."
+        ),
+    },
+    {
+        "frage": "Was passiert, wenn ich in einem Plotly-Diagramm mit der Maus über die Balken fahre?",
+        "antwort": (
+            "Es erscheint ein Tooltip mit den genauen Werten (Anzahl bzw. Anteil "
+            "in Prozent) für den jeweiligen Balken oder die jeweilige Zelle. In "
+            "der oberen rechten Ecke des Diagramms erscheint beim Überfahren "
+            "zusätzlich eine Werkzeugleiste, mit der Sie z. B. hinein- oder "
+            "herauszoomen sowie das Diagramm als Bild speichern können."
+        ),
+    },
+    {
+        "frage": "Warum lädt das Dashboard beim ersten Öffnen manchmal etwas länger?",
+        "antwort": (
+            "Beim ersten Laden wird die .rds-Datei eingelesen und zwischengespeichert "
+            "(„gecacht“). Das kann je nach Dateigröße einige Sekunden dauern und "
+            "wird durch einen Ladehinweis angezeigt. Solange Sie dieselbe Datei "
+            "verwenden, greift Streamlit danach auf den Zwischenspeicher zu, "
+            "sodass Seitenwechsel und Filteränderungen deutlich schneller sind."
+        ),
+    },
 ]
 
 #══════════════════════════════════════════════════════════════════════════════
@@ -1160,8 +1254,11 @@ if seite == "Univariate Analyse":
                 # ── KEY CHANGE: enforce defined category order on x-axis ──────
                 category_orders={uni_var: cat_order},
             )
-            fig_uni.update_traces(texttemplate="%{text:.1f}%", textposition="outside")
+            fig_uni.update_traces(texttemplate="%{text:.1f}%", textposition="outside", textfont_color="#000000")
             fig_uni.update_layout(showlegend=False, xaxis_tickangle=-35, yaxis_ticksuffix="%", **PLOTLY_THEME)
+            fig_uni.update_xaxes(title_font_color="#000000", tickfont_color="#000000")
+            fig_uni.update_yaxes(title_font_color="#000000", tickfont_color="#000000")
+            fig_uni.update_layout(title_font_color="#000000")
             st.plotly_chart(fig_uni, use_container_width=True)
  
 # ══════════════════════════════════════════════════════════════════════════════
@@ -1257,6 +1354,9 @@ elif seite == "Bivariate Analyse":
             color_continuous_scale="Blues", title=f"{lbl1} × {lbl2}",
         )
         fig_biv.update_layout(**PLOTLY_THEME)
+        fig_biv.update_xaxes(title_font_color="#000000", tickfont_color="#000000")
+        fig_biv.update_yaxes(title_font_color="#000000", tickfont_color="#000000")
+        fig_biv.update_layout(title_font_color="#000000", coloraxis_colorbar_tickfont_color="#000000")
     else:
         fig_biv = px.bar(
             ct_melted, x=biv_var1, y="Anteil (%)", color=biv_var2,
@@ -1268,6 +1368,9 @@ elif seite == "Bivariate Analyse":
         )
         fig_biv.update_layout(xaxis_tickangle=-35, legend_title=lbl2, yaxis_ticksuffix="%", **PLOTLY_THEME)
         fig_biv.update_yaxes(range=[0, 100], autorange=False)
+        fig_biv.update_xaxes(title_font_color="#000000", tickfont_color="#000000")
+        fig_biv.update_yaxes(title_font_color="#000000", tickfont_color="#000000")
+        fig_biv.update_layout(title_font_color="#000000", legend_font_color="#000000", legend_title_font_color="#000000")
     st.plotly_chart(fig_biv, use_container_width=True)
  
 # ══════════════════════════════════════════════════════════════════════════════
