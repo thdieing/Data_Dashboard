@@ -536,7 +536,7 @@ FAQ_ITEMS = [
             "Nicht jede teilnehmende Person hat jede Frage beantwortet. Fehlende "
             "Antworten werden im Datensatz als „NaN“ (Not a Number, also fehlender "
             "Wert) gespeichert. Unter jeder Tabelle sehen Sie – falls vorhanden – "
-            "einen Hinweis, wie viele Beobachtungen wegen fehlender Werte aus der "
+            "einen Hinweis, wie viele Teilnehmer*innen wegen fehlender Werte aus der "
             "jeweiligen Auswertung ausgeschlossen wurden. Diese Fälle fließen nicht "
             "in Tabelle oder Diagramm ein, damit die Prozentangaben nicht verzerrt werden."
         ),
@@ -975,7 +975,7 @@ def nan_sentence(n_nan: int, n_total: int, label: str) -> str:
         return ""
     pct = round(n_nan / n_total * 100, 1)
     return (
-        f"{n_nan} von {n_total} Beobachtungen ({pct} %) "
+        f"{n_nan} von {n_total} Teilnehmer*innen ({pct} %) "
         f"haben für **{label}** keinen gültigen Wert (fehlend) und wurden "
         f"aus Tabelle und Diagramm ausgeschlossen."
     )
@@ -986,7 +986,7 @@ def nan_sentence_biv(n_nan: int, n_total: int, lbl1: str, lbl2: str) -> str:
         return ""
     pct = round(n_nan / n_total * 100, 1)
     return (
-        f"{n_nan} von {n_total} Beobachtungen ({pct} %) wurden ausgeschlossen, "
+        f"{n_nan} von {n_total} Teilnehmer*innen ({pct} %) wurden ausgeschlossen, "
         f"da mindestens einer der Werte für **{lbl1}** oder **{lbl2}** fehlt."
     )
 
@@ -1170,7 +1170,7 @@ st.title("Zuhören. Verstehen. Verändern. TU im Dialog (Welle1) -- Dashboard")
 
 if df_full is not None:
     m1, m2 = st.columns(2)
-    m1.metric("Beobachtungen", f"{df.shape[0]:,}")
+    m1.metric("Teilnehmer*innen", f"{df.shape[0]:,}")
     m2.metric("Variablen", f"{df.shape[1]:,}")
     #m3.metric(
        #"Numerische Var.",
